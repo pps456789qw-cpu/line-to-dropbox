@@ -120,6 +120,17 @@ app.post("/webhook", async (req, res) => {
       }
     } catch (err) {
       console.error("處理訊息時發生錯誤：", err.message);
+      if (err.response && err.response.data) {
+        console.error(
+          "詳細錯誤內容：",
+          typeof err.response.data === "string"
+            ? err.response.data
+            : JSON.stringify(err.response.data)
+        );
+      }
+      if (err.error) {
+        console.error("Dropbox 錯誤內容：", JSON.stringify(err.error));
+      }
     }
   }
 });
